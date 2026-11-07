@@ -1,0 +1,14 @@
+# Données volumineuses : non versionnées (on garde seulement l'arborescence)
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Python / Jupyter
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Fichiers parasites Windows
+*:Zone.Identifier
+Thumbs.db
