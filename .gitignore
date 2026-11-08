@@ -1,14 +1,23 @@
-# Données volumineuses : non versionnées (on garde seulement l'arborescence)
+# Large data: not versioned (only the folder structure is kept)
 data/raw/*
 data/processed/*
 !data/raw/.gitkeep
 !data/processed/.gitkeep
+# Manual mapping: the only irreplaceable data, so it is versioned
+!data/raw/manual_mapping.gpkg
 
 # Python / Jupyter
 __pycache__/
 *.pyc
 .ipynb_checkpoints/
 
-# Fichiers parasites Windows
+# Windows clutter
 *:Zone.Identifier
 Thumbs.db
+
+# QGIS and SQLite: automatic backups and temporary files
+*.qgz~
+*.qgs~
+*.gpkg-wal
+*.gpkg-shm
+*.gpkg-journal
