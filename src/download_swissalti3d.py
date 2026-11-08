@@ -1,8 +1,8 @@
-"""Télécharge les dalles swissALTI3D (2 m) couvrant la zone d'étude.
+"""Télécharge les dalles swissALTI3D (2 m) couvrant l'emprise d'étude.
 
 Source : API STAC de swisstopo (data.geo.admin.ch), données libres.
 Chaque dalle fait 1 km x 1 km. Quand une dalle existe pour plusieurs années,
-on garde la plus récente.
+on garde la plus récente. Les dalles déjà présentes ne sont pas retéléchargées.
 
 Usage (depuis la racine du projet) :
     python src/download_swissalti3d.py
@@ -10,19 +10,28 @@ Usage (depuis la racine du projet) :
 
 import json
 import urllib.request
-from pathlib import Path
 
-# Emprise du massif Mischabel–Weisshorn en WGS84 (lon_min, lat_min, lon_max, lat_max)
-BBOX = (7.6, 46.0, 7.95, 46.15)
+from pyproj import Transformer
+
+from config import EMPRISE, RAW
+
 RESOLUTION = "2"  # mètres ; on rééchantillonne ensuite à 10 m
-OUT_DIR = Path("data/raw/swissalti3d")
+OUT_DIR = RAW / "swissalti3d"
 
 STAC_URL = "https://data.geo.admin.ch/api/stac/v0.9/collections/ch.swisstopo.swissalti3d/items"
 
 
+def emprise_wgs84(emprise):
+    """Rectangle WGS84 qui contient l'emprise LV95 (l'API STAC n'accepte que le WGS84)."""
+    vers_wgs84 = Transformer.from_crs(2056, 4326, always_xy=True)
+    xmin, ymin, xmax, ymax = emprise
+    lons, lats = vers_wgs84.transform([xmin, xmin, xmax, xmax], [ymin, ymax, ymin, ymax])
+    return min(lons), min(lats), max(lons), max(lats)
+
+
 def list_items(bbox):
-    """Renvoie toutes les dalles STAC qui intersectent l'emprise (gère la pagination)."""
-    url = f"{STAC_URL}?bbox={','.join(map(str, bbox))}&limit=100"
+    """Renvoie toutes les dalles STAC qui intersectent le rectangle (gère la pagination)."""
+    url = f"{STAC_URL}?bbox={','.join(f'{v:.5f}' for v in bbox)}&limit=100"
     items = []
     while url:
         with urllib.request.urlopen(url, timeout=60) as response:
@@ -30,6 +39,13 @@ def list_items(bbox):
         items += page["features"]
         url = next((link["href"] for link in page["links"] if link["rel"] == "next"), None)
     return items
+
+
+def dalle_dans_emprise(tile, emprise):
+    """Une dalle '2612-1094' a son coin sud-ouest en (2 612 000, 1 094 000)."""
+    x_km, y_km = (int(v) for v in tile.split("-"))
+    xmin, ymin, xmax, ymax = emprise
+    return xmin <= x_km * 1000 < xmax and ymin <= y_km * 1000 < ymax
 
 
 def latest_tif_per_tile(items, resolution):
@@ -46,10 +62,12 @@ def latest_tif_per_tile(items, resolution):
 
 def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    tiles = latest_tif_per_tile(list_items(BBOX), RESOLUTION)
-    print(f"{len(tiles)} dalles à télécharger dans {OUT_DIR}")
+    tiles = latest_tif_per_tile(list_items(emprise_wgs84(EMPRISE)), RESOLUTION)
+    tiles = {t: v for t, v in tiles.items() if dalle_dans_emprise(t, EMPRISE)}
+    print(f"{len(tiles)} dalles dans l'emprise, enregistrées dans {OUT_DIR}")
 
-    for i, (tile, (year, url)) in enumerate(sorted(tiles.items()), start=1):
+    nouvelles = 0
+    for tile, (year, url) in sorted(tiles.items()):
         target = OUT_DIR / url.split("/")[-1]
         if target.exists():
             continue
@@ -57,9 +75,8 @@ def main():
         partial = target.with_suffix(".part")
         urllib.request.urlretrieve(url, partial)
         partial.rename(target)
-        if i % 50 == 0:
-            print(f"  {i}/{len(tiles)}")
-    print("Terminé.")
+        nouvelles += 1
+    print(f"Terminé : {nouvelles} nouvelles dalles téléchargées.")
 
 
 if __name__ == "__main__":
