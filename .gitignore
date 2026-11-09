@@ -6,6 +6,7 @@ data/processed/*
 # Manual mapping: the only irreplaceable data, so it is versioned
 !data/raw/manual_mapping.gpkg
 !data/raw/false_alarms_review.gpkg
+!data/raw/candidates_review.gpkg
 
 # Python / Jupyter
 __pycache__/

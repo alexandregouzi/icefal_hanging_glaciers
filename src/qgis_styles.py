@@ -229,3 +229,28 @@ def false_alarms_qml():
  </fieldConfiguration>
 </qgis>
 """
+
+
+def candidates_to_check_qml():
+    """Candidates to check: thick green outline, labelled with their rank; verdict list in the form."""
+    verdicts = [("hanging", "hanging glacier"), ("not_hanging", "not a hanging glacier"), ("unsure", "unsure")]
+    return HEADER + f"""<qgis version="3.34" styleCategories="Symbology|Labeling|Fields|Forms">
+ <renderer-v2 type="singleSymbol" symbollevels="0" enableorderby="0" forceraster="0">
+  <symbols>{_fill_symbol("0", "27,175,122,40", "27,175,122,255", 1.0)}
+  </symbols>
+ </renderer-v2>{_labels("rank", "0,110,70", 11)}
+ <fieldConfiguration>{_value_map("verdict", verdicts)}{_multiline("notes")}
+ </fieldConfiguration>
+</qgis>
+"""
+
+
+def candidates_qml():
+    """All candidates: thin orange outline, no fill."""
+    return HEADER + f"""<qgis version="3.34" styleCategories="Symbology">
+ <renderer-v2 type="singleSymbol" symbollevels="0" enableorderby="0" forceraster="0">
+  <symbols>{_fill_symbol("0", "0,0,0,0", "235,104,52,255", 0.4, "solid", "no")}
+  </symbols>
+ </renderer-v2>
+</qgis>
+"""
