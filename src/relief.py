@@ -25,3 +25,21 @@ def slope(z, res):
     """
     dy, dx = np.gradient(z, res)
     return np.degrees(np.arctan(np.hypot(dx, dy)))
+
+
+def aspect(z, res):
+    """Aspect in radians: direction the slope faces, clockwise from north (0 = N, pi/2 = E)."""
+    dy, dx = np.gradient(z, res)
+    dy = -dy  # y axis pointing north
+    return np.mod(np.arctan2(-dx, -dy), 2 * np.pi)
+
+
+def curvature(z, res):
+    """Curvature as the Laplacian of the DEM, in 1/100 m.
+
+    Positive = convex (ridges, the edge of a rock step), negative = concave (hollows, the foot of a wall).
+    """
+    dy, dx = np.gradient(z, res)
+    d2y = np.gradient(dy, res, axis=0)
+    d2x = np.gradient(dx, res, axis=1)
+    return -100 * (d2x + d2y)
