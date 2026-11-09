@@ -9,6 +9,13 @@ Outputs (data/processed/):
                        band 2 hanging: 1 inside a mapped hanging glacier polygon, else 0
                        band 3 confidence: confidence of that polygon (1–3), 0 = none
                        band 4 block: mapping block (1–4), 0 = outside the blocks
+                       band 5 hanging_revised: as band 2, plus the polygons added after the review of the
+                              false alarms (source = 'review')
+                       band 6 excluded: pixels of the reviewed false alarms judged hanging or unsure but not
+                              redrawn as a polygon (left out of the revised labels: neither hanging nor not)
+
+Band 2 uses only the polygons of the initial, blind mapping (source = 'initial'): it is the reference for
+the evaluation. Bands 5–6 are the labels corrected after looking at the model's errors (notebook 04).
 
 Usage (from the project root):
     python src/prepare_features.py
@@ -28,28 +35,43 @@ DEM = PROCESSED / f"dem_{DEM_RES}m.tif"
 OUT_FEATURES = PROCESSED / f"features_{DEM_RES}m.tif"
 OUT_LABELS = PROCESSED / f"labels_{DEM_RES}m.tif"
 MAPPING = RAW / "manual_mapping.gpkg"
+REVIEW = RAW / "false_alarms_review.gpkg"
 
 WINDOW = 21  # neighbourhood for the context variables: 21 × 21 pixels = 210 m
 
 
 def burn(shapes, grid, dtype="int16"):
     """Rasterize (geometry, value) pairs on the DEM grid (a pixel is inside if its centre is)."""
+    shapes = list(shapes)
+    if not shapes:
+        return np.zeros(grid["shape"], dtype)
     return rasterize(shapes, out_shape=grid["shape"], transform=grid["transform"], fill=0, dtype=dtype)
 
 
 def labels(grid):
     glaciers = gpd.read_file(PROCESSED / "sgi2023_zone.gpkg", layer="glaciers")
-    hanging = gpd.read_file(MAPPING, layer="hanging_glaciers")
-    hanging["geometry"] = hanging.make_valid()  # a few hand-drawn polygons may self-intersect
+    polygons = gpd.read_file(MAPPING, layer="hanging_glaciers")
+    polygons["geometry"] = polygons.make_valid()  # a few hand-drawn polygons may self-intersect
+    initial = polygons[polygons["source"] == "initial"]
     blocks = gpd.read_file(MAPPING, layer="blocks")
     blocks = blocks[blocks["status"] == "done"]
 
     glacier = burn(zip(glaciers.geometry, range(1, len(glaciers) + 1)), grid)
-    confidence = burn(zip(hanging.geometry, hanging["confidence"].astype(int)), grid)
-    confidence[glacier == 0] = 0  # labels only on glacier ice (SGI2023 outlines)
+    ice = glacier > 0                              # labels only on glacier ice (SGI2023 outlines)
+    confidence = burn(zip(initial.geometry, initial["confidence"].astype(int)), grid) * ice
     is_hanging = (confidence > 0).astype("int16")
     block = burn(zip(blocks.geometry, blocks["block_id"].astype(int)), grid)
-    return glaciers, {"glacier": glacier, "hanging": is_hanging, "confidence": confidence, "block": block}
+
+    # Revised labels: all polygons; reviewed false alarms judged hanging/unsure without a polygon are excluded.
+    # A false alarm that a review polygon overlaps is described by that polygon (the rest of it is not hanging).
+    revised = (burn(((g, 1) for g in polygons.geometry), grid) * ice).astype("int16")
+    review = gpd.read_file(REVIEW, layer="false_alarms")
+    review_polygons = polygons[polygons["source"] == "review"].union_all()
+    pending = review[review["verdict"].isin(["missed_hanging", "unsure"]) & ~review.intersects(review_polygons)]
+    excluded = (burn(((g, 1) for g in pending.geometry), grid) * ice * (1 - revised)).astype("int16")
+
+    return glaciers, {"glacier": glacier, "hanging": is_hanging, "confidence": confidence, "block": block,
+                      "hanging_revised": revised, "excluded": excluded}
 
 
 def features(z, glaciers, glacier):
@@ -114,6 +136,8 @@ def main():
     print(f"{OUT_FEATURES.name}: {len(feat)} variables ({', '.join(feat)})")
     print(f"{OUT_LABELS.name}: {ice.sum():,} glacier pixels, {in_blocks.sum():,} in the mapping blocks, "
           f"of which {lab['hanging'][in_blocks].sum():,} hanging ({lab['hanging'][in_blocks].mean():.1%})")
+    print(f"revised labels: {lab['hanging_revised'][in_blocks].sum():,} hanging, "
+          f"{lab['excluded'][in_blocks].sum():,} excluded (reviewed false alarms not redrawn)")
     outside = lab["hanging"].astype(bool) & ~in_blocks
     print(f"hanging pixels outside the blocks (glaciers crossing a block edge, not used): {outside.sum():,}")
 

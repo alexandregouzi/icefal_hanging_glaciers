@@ -4,7 +4,7 @@ The kit is written to a folder given on the command line (QGIS runs on Windows a
 handles GeoPackages better on a Windows drive than across the WSL share):
 
     manual_mapping.gpkg   the file you edit
-        hanging_glaciers  empty polygon layer to draw in (front_type, state, confidence, notes)
+        hanging_glaciers  empty polygon layer to draw in (front_type, state, confidence, notes, source)
         blocks            the 4 mapping blocks; set status to 'done' when a block is finished
     helpers.gpkg          read-only reference layers
         glaciers          the 127 SGI2023 glaciers of the study extent
@@ -63,7 +63,8 @@ def empty_hanging_glaciers_layer():
         {"front_type": pd.Series(dtype="str"),
          "state": pd.Series(dtype="str"),
          "confidence": pd.Series(dtype="Int64"),
-         "notes": pd.Series(dtype="str")},
+         "notes": pd.Series(dtype="str"),
+         "source": pd.Series(dtype="str")},
         geometry=gpd.GeoSeries([], crs=CRS),
     )
 
@@ -106,6 +107,12 @@ def upgrade_mapping_file(mapping):
                     "UPDATE hanging_glaciers SET state = 'current'"):
             subprocess.run(["ogrinfo", "-q", str(mapping), "-sql", sql], check=True)
         print("  added field hanging_glaciers.state (existing polygons set to 'current')")
+
+    if "source" not in columns:
+        for sql in ("ALTER TABLE hanging_glaciers ADD COLUMN source TEXT",
+                    "UPDATE hanging_glaciers SET source = 'initial'"):
+            subprocess.run(["ogrinfo", "-q", str(mapping), "-sql", sql], check=True)
+        print("  added field hanging_glaciers.source (existing polygons set to 'initial')")
 
 
 def main(out_dir):

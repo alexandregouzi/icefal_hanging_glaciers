@@ -79,16 +79,21 @@ def _labels(field, rgb, size=10):
 
 
 def hanging_glaciers_qml():
-    """Red semi-transparent polygons; form with cliff/ramp and current/former lists and a 1–3 confidence box."""
+    """Red semi-transparent polygons; form with cliff/ramp, current/former and initial/review lists and a 1–3 confidence box.
+
+    `source` tells the polygons of the initial, blind mapping from those drawn after reviewing the
+    model's false alarms; new polygons default to 'review'.
+    """
     return HEADER + f"""<qgis version="3.34" styleCategories="Symbology|Fields|Forms">
  <renderer-v2 type="singleSymbol" symbollevels="0" enableorderby="0" forceraster="0">
   <symbols>{_fill_symbol("0", "227,73,72,90", "227,73,72,255", 0.6)}
   </symbols>
  </renderer-v2>
- <fieldConfiguration>{_value_map("front_type", [("cliff", "cliff"), ("ramp", "ramp")])}{_value_map("state", [("current", "current"), ("former", "former")])}{_range("confidence", 1, 3)}{_multiline("notes")}
+ <fieldConfiguration>{_value_map("front_type", [("cliff", "cliff"), ("ramp", "ramp")])}{_value_map("state", [("current", "current"), ("former", "former")])}{_range("confidence", 1, 3)}{_multiline("notes")}{_value_map("source", [("initial", "initial (blind mapping)"), ("review", "review (after the false alarms)")])}
  </fieldConfiguration>
  <defaults>
   <default field="state" expression="'current'" applyOnUpdate="0"/>
+  <default field="source" expression="'review'" applyOnUpdate="0"/>
  </defaults>
  <constraints>
   <constraint field="front_type" constraints="1" notnull_strength="1" unique_strength="0" exp_strength="0"/>
@@ -205,5 +210,22 @@ def dem_hillshade_qml():
                   azimuth="315" angle="45" zfactor="1" multidirection="1"/>
  </pipe>
  <blendMode>6</blendMode>
+</qgis>
+"""
+
+
+def false_alarms_qml():
+    """False-alarm patches to review: purple outline, labelled with their number; verdict list in the form."""
+    verdicts = [("missed_hanging", "hanging glacier missed by the mapping"),
+                ("model_error", "not a hanging glacier (model error)"),
+                ("unsure", "unsure"),
+                ("redrawn", "redrawn as a polygon in manual_mapping (source = review)")]
+    return HEADER + f"""<qgis version="3.34" styleCategories="Symbology|Labeling|Fields|Forms">
+ <renderer-v2 type="singleSymbol" symbollevels="0" enableorderby="0" forceraster="0">
+  <symbols>{_fill_symbol("0", "122,47,214,40", "122,47,214,255", 0.8)}
+  </symbols>
+ </renderer-v2>{_labels("patch_id", "122,47,214", 11)}
+ <fieldConfiguration>{_value_map("verdict", verdicts)}{_multiline("notes")}
+ </fieldConfiguration>
 </qgis>
 """

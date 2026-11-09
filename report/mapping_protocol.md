@@ -88,3 +88,16 @@ the same year as the SGI2023 outlines in these blocks.
 - Terrain: 10 m DEM from swissALTI3D 2024 (hillshade) and the derived slope map.
 - Reference: SGI2023 outlines and centre lines (GLAMOS 2026).
 - Output: `data/raw/manual_mapping.gpkg` (layers `hanging_glaciers`, `blocks`), LV95 (EPSG:2056).
+
+## Review of the false alarms
+
+After the first cross-validation, the patches of at least 1 ha predicted hanging (out-of-fold probability ≥ 0.5)
+outside the mapped polygons were checked on SWISSIMAGE with the same rules (`src/prepare_false_alarm_review.py`,
+`data/raw/false_alarms_review.gpkg`). Each patch received a verdict: `missed_hanging`, `model_error`, `unsure`, or
+`redrawn` when the author drew the hanging glacier as a new polygon (`source = review` in `manual_mapping.gpkg`;
+the polygons of the blind mapping have `source = initial`). The outlines of the patches, produced by the model,
+are never used as labels.
+
+Because only places predicted *hanging* were reviewed, the corrections all favour the model. The evaluation
+therefore uses the initial labels as the reference; scores with the revised labels (all polygons, reviewed patches
+judged hanging or unsure but not redrawn excluded) are reported as an upper bound (notebook 04).
