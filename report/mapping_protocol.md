@@ -26,6 +26,18 @@ Excluded:
 - icefalls *within* a glacier (seracs, but the ice continues downstream);
 - snow patches without visible glacier ice, and debris-covered ice at the foot of rock walls.
 
+Icefalls versus hanging glaciers: the deciding criterion is the **continuity of the ice across the
+rock step**. Where the ice is continuous from the top to the foot of the step, the seracs form an icefall
+within the glacier (not hanging). Where a band of bare rock interrupts the ice at the step, the upper part
+now ends above a rock wall and is mapped as a hanging glacier (the lower part is a regenerated glacier).
+Ice detaching laterally over a rock wall is mapped as hanging for that sector.
+
+Former hanging glaciers: a glacier whose front has clearly retreated from the lip of the rock step that it
+used to overhang is recorded with `state = former`, only when this is obvious in the 2023 imagery. Former
+hanging glaciers cannot be identified reliably from a single image and differ from current ones by their
+history rather than their present geometry; they are therefore **not used as training labels** and are
+analysed separately.
+
 ## Avoiding circular labels
 
 The decision to map a glacier as hanging is based on **visual evidence in the orthophotos**
@@ -44,10 +56,14 @@ One polygon per hanging glacier, covering the hanging ice mass:
 - lateral edges: the SGI2023 outline (snapped).
 
 Where the hanging glacier is a separate SGI2023 unit, its outline is reused. Where it is part of a
-larger outline, only the hanging part is drawn. Where the visible front has retreated from the SGI2023
-outline (imagery more recent than 2021–2024), the visible front is drawn and the case is noted.
+larger outline, only the hanging part is drawn. Where the visible front differs from the SGI2023
+outline (both date from 2023 in the mapping blocks, so differences should be rare), the visible front
+is drawn and the case is noted.
 
-Attributes: `front_type` (cliff / ramp), `confidence` (1 = doubtful, 2 = probable, 3 = certain), `notes`.
+Attributes: `front_type` (cliff / ramp), `state` (current / former; default current),
+`confidence` (1 = doubtful, 2 = probable, 3 = certain), `notes`.
+Labels are clipped to the SGI2023 outlines. The classifier is trained on all polygons, and a sensitivity
+run excludes the polygons with confidence 1.
 
 ## Mapping blocks
 
@@ -63,7 +79,8 @@ Mapping is exhaustive within four blocks of 5 × 5 km chosen in contrasting sett
 
 Together they cover about 44 km² of the 159 km² of glacier ice in the study extent (28 %).
 A hanging glacier crossing a block edge is drawn entirely. A block is marked `done` only once all
-its hanging glaciers have been mapped. The year of the SWISSIMAGE flight is recorded per block (`image_year`).
+its hanging glaciers have been mapped. The year of the SWISSIMAGE flight is recorded per block (`image_year`): 2023 for all four blocks,
+the same year as the SGI2023 outlines in these blocks.
 
 ## Data and tools
 

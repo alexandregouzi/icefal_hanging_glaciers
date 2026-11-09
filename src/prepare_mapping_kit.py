@@ -4,7 +4,7 @@ The kit is written to a folder given on the command line (QGIS runs on Windows a
 handles GeoPackages better on a Windows drive than across the WSL share):
 
     manual_mapping.gpkg   the file you edit
-        hanging_glaciers  empty polygon layer to draw in (front_type, confidence, notes)
+        hanging_glaciers  empty polygon layer to draw in (front_type, state, confidence, notes)
         blocks            the 4 mapping blocks; set status to 'done' when a block is finished
     helpers.gpkg          read-only reference layers
         glaciers          the 127 SGI2023 glaciers of the study extent
@@ -13,8 +13,13 @@ handles GeoPackages better on a Windows drive than across the WSL share):
     dem_10m.tif           shown as a hillshade (style file dem_10m.qml)
     slope_10m.tif         slope classes 30/40/50° (style file slope_10m.qml)
 
-The styles and forms (cliff/ramp list, confidence 1–3) are applied automatically by QGIS.
-An existing manual_mapping.gpkg is never overwritten.
+The styles and forms (cliff/ramp and current/former lists, confidence 1–3) are applied
+automatically by QGIS. `state` is 'current' for a hanging glacier today and 'former' only for
+obvious former hanging glaciers (front clearly retreated from the rock step); former ones are
+not used as training labels.
+An existing manual_mapping.gpkg is never overwritten: it is only upgraded in place (missing
+fields and layers are added, styles refreshed, drawn features untouched), and only when QGIS
+does not have it open.
 
 Usage (from the project root, with the outputs of prepare_dem/prepare_relief/prepare_sgi):
     python src/prepare_mapping_kit.py /mnt/c/Users/<user>/icefal_qgis
@@ -22,6 +27,7 @@ Usage (from the project root, with the outputs of prepare_dem/prepare_relief/pre
 
 import shutil
 import sqlite3
+import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -55,6 +61,7 @@ def blocks_layer():
 def empty_hanging_glaciers_layer():
     return gpd.GeoDataFrame(
         {"front_type": pd.Series(dtype="str"),
+         "state": pd.Series(dtype="str"),
          "confidence": pd.Series(dtype="Int64"),
          "notes": pd.Series(dtype="str")},
         geometry=gpd.GeoSeries([], crs=CRS),
@@ -84,13 +91,34 @@ def add_default_style(gpkg, layer, geometry_column, qml):
         )
 
 
+def upgrade_mapping_file(mapping):
+    """Add missing fields/layers to an existing mapping file, without touching its features."""
+    if any(mapping.with_name(mapping.name + suffix).exists() for suffix in ("-wal", "-shm")):
+        sys.exit(f"{mapping} is open in QGIS (lock files present): close QGIS and run again.")
+
+    with sqlite3.connect(mapping) as con:  # read-only queries
+        columns = [row[1] for row in con.execute("PRAGMA table_info(hanging_glaciers)")]
+
+    if "state" not in columns:
+        # Through GDAL (ogrinfo), not plain sqlite3: the GeoPackage spatial-index triggers
+        # call GDAL functions (ST_IsEmpty, ...) that plain SQLite does not know.
+        for sql in ("ALTER TABLE hanging_glaciers ADD COLUMN state TEXT",
+                    "UPDATE hanging_glaciers SET state = 'current'"):
+            subprocess.run(["ogrinfo", "-q", str(mapping), "-sql", sql], check=True)
+        print("  added field hanging_glaciers.state (existing polygons set to 'current')")
+
+
 def main(out_dir):
     out_dir.mkdir(parents=True, exist_ok=True)
 
     # 1. File to edit: never overwritten, since it holds the manual work
     mapping = out_dir / "manual_mapping.gpkg"
     if mapping.exists():
-        print(f"{mapping} already exists: left untouched.")
+        print(f"{mapping} already exists: upgrading in place.")
+        upgrade_mapping_file(mapping)
+        for layer, qml in [("hanging_glaciers", qgis_styles.hanging_glaciers_qml()),
+                           ("blocks", qgis_styles.blocks_qml())]:
+            add_default_style(mapping, layer, "geometry", qml)
     else:
         empty_hanging_glaciers_layer().to_file(mapping, layer="hanging_glaciers", driver="GPKG",
                                                geometry_type="Polygon")

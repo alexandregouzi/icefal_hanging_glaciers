@@ -79,14 +79,17 @@ def _labels(field, rgb, size=10):
 
 
 def hanging_glaciers_qml():
-    """Red semi-transparent polygons; form with a cliff/ramp list and a 1–3 confidence box."""
+    """Red semi-transparent polygons; form with cliff/ramp and current/former lists and a 1–3 confidence box."""
     return HEADER + f"""<qgis version="3.34" styleCategories="Symbology|Fields|Forms">
  <renderer-v2 type="singleSymbol" symbollevels="0" enableorderby="0" forceraster="0">
   <symbols>{_fill_symbol("0", "227,73,72,90", "227,73,72,255", 0.6)}
   </symbols>
  </renderer-v2>
- <fieldConfiguration>{_value_map("front_type", [("cliff", "cliff"), ("ramp", "ramp")])}{_range("confidence", 1, 3)}{_multiline("notes")}
+ <fieldConfiguration>{_value_map("front_type", [("cliff", "cliff"), ("ramp", "ramp")])}{_value_map("state", [("current", "current"), ("former", "former")])}{_range("confidence", 1, 3)}{_multiline("notes")}
  </fieldConfiguration>
+ <defaults>
+  <default field="state" expression="'current'" applyOnUpdate="0"/>
+ </defaults>
  <constraints>
   <constraint field="front_type" constraints="1" notnull_strength="1" unique_strength="0" exp_strength="0"/>
   <constraint field="confidence" constraints="1" notnull_strength="1" unique_strength="0" exp_strength="0"/>
