@@ -21,6 +21,7 @@ from rasterio.features import rasterize
 from scipy import ndimage
 
 from config import DEM_RES, PROCESSED, RAW
+from downslope import walk_downslope
 from relief import aspect, curvature, slope
 
 DEM = PROCESSED / f"dem_{DEM_RES}m.tif"
@@ -52,7 +53,8 @@ def labels(grid):
 
 
 def features(z, glaciers, glacier):
-    """Terrain variables. Context variables summarise a 210 m neighbourhood around each pixel."""
+    """Terrain variables. Context variables summarise a 210 m neighbourhood around each pixel;
+    the last four follow the steepest-descent path below each glacier pixel."""
     s = slope(z, DEM_RES)
     a = aspect(z, DEM_RES)
     z_low = np.where(np.isnan(z), np.inf, z)      # missing DEM (outside Switzerland, no glacier there)
@@ -68,6 +70,8 @@ def features(z, glaciers, glacier):
     rel_elev = np.full(z.shape, np.nan, "float32")
     rel_elev[inside] = np.clip((z[inside] - zmin) / (zmax - zmin), 0, 1)
 
+    below = walk_downslope(z, inside, s, DEM_RES)  # what lies downslope (see downslope.py)
+
     return {
         "elevation": z,                                                           # m
         "slope": s,                                                               # degrees
@@ -80,7 +84,8 @@ def features(z, glaciers, glacier):
         "dist_to_edge": ndimage.distance_transform_edt(inside) * DEM_RES,         # m to the glacier outline
         "rel_elevation": rel_elev,                                                # 0 = glacier's lowest point, 1 = highest
         "log10_glacier_area": np.log10(area),                                     # size of the SGI2023 unit (km²)
-    }
+        **below,                                                                  # drop_below_200m, slope_max_below,
+    }                                                                             # dist_to_exit, step_height
 
 
 def main():
