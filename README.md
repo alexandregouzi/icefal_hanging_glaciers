@@ -15,7 +15,7 @@ those contained in larger inventory outlines, and rank them by a geometric index
 - 151 candidates over the massif (8.6 km²); in a random sample outside the mapped blocks, 18 of 22 were confirmed
   as hanging glaciers on orthophotos (precision 0.82, 95 % interval 0.61–0.93).
 - The thermal state of the candidates (cold or temperate base) is not assessed: a 1D heat model was tried and
-  dropped, as terrain data alone cannot tell it apart (see `JOURNAL.md`, 2026-11-09).
+  dropped, as terrain data alone cannot tell it apart.
 
 ![Candidate hanging glaciers](figures/fig3_candidates.png)
 
@@ -29,7 +29,6 @@ those contained in larger inventory outlines, and rank them by a geometric index
 | `data/processed/` | Clipped and derived data (not versioned, rebuilt by the scripts) |
 | `figures/` | All figures, produced by scripts or notebooks |
 | `report/` | Report draft, mapping protocol, candidate table, Overleaf export |
-| `JOURNAL.md` | Work log: what was done, decisions and their reasons |
 
 The only versioned data are the manual work, which cannot be rebuilt:
 
