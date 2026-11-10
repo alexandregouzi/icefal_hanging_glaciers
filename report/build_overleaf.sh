@@ -9,7 +9,7 @@ rm -rf "$build" && mkdir -p "$build/figures"
 
 cd "$(dirname "$0")"
 pandoc report.md -s -o "$build/main.tex" \
-    -V geometry:margin=2.5cm -V fontsize=11pt -V colorlinks=true -V header-includes='\usepackage{xurl}'
+    -V geometry:margin=2cm -V fontsize=10pt -V colorlinks=true -V header-includes='\usepackage{xurl}'
 
 # Figures: copy those used by the report, and point to figures/ instead of ../figures/
 grep -oE '\.\./figures/[^)]*\.(png|pdf)' report.md | sort -u | while read -r f; do cp "$f" "$build/figures/"; done

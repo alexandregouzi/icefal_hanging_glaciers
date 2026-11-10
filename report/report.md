@@ -34,7 +34,7 @@ orthophotos it no longer appears to be hanging, and it was neither mapped nor pr
 ![(a) Study area, SGI2023 glacier outlines, the four mapping blocks and the boreholes of Beer et al. (2026) on
 Alphubel and Chessjengletscher. (b) Manual mapping in block 4 (Zinal–Moming): hanging glaciers of the blind mapping
 and those added after the review of the false alarms. Hillshade from swissALTI3D; coordinates in the Swiss LV95
-system (EPSG:2056).](../figures/fig1_study_area.pdf)
+system (EPSG:2056).](../figures/fig1_study_area.pdf){width=85%}
 
 # 2. Methods
 
@@ -59,7 +59,8 @@ edge. Holes in the SGI outlines count as rock, so a rock band inside a large gla
 **Classifier and validation.** Random forest (scikit-learn, 200 trees, balanced class weights). Hanging pixels are
 4.4 % of the labelled ice, so skill is measured by precision–recall and average precision (AP; a random guess
 scores 0.044). Validation is leave-one-block-out: each block is predicted by a forest trained on the three others.
-A mapped glacier counts as detected when at least 25 % of its pixels have a probability ≥ 0.5.
+A mapped glacier counts as detected when at least 25 % of its pixels have a probability ≥ 0.5; both thresholds
+were fixed in advance, not tuned.
 
 **Review of the errors.** The 28 false-alarm patches (≥ 1 ha) of the cross-validation were then checked on the
 imagery. Hanging glaciers confirmed there were redrawn following the protocol as new polygons, tagged apart from
@@ -77,7 +78,7 @@ outside the blocks was checked on the imagery to measure precision where the mod
 **The area of the inventory unit is a shortcut.** With the 11 neighbourhood variables, AP is 0.42. Adding the
 four downslope variables raises it to 0.52, but this forest detects only 1 of the 12 hanging glaciers lying inside
 SGI units larger than 1 km². It relies first on the area of the unit: *small unit = hanging*. Without that
-variable, AP is 0.43 but 9 of the 12 hanging parts of large glaciers are found, and 17 of the 27 mapped hanging
+variable, AP is 0.43 (0.21 to 0.59 depending on the block left out) but 9 of the 12 hanging parts of large glaciers are found, and 17 of the 27 mapped hanging
 glaciers overall (precision and recall 0.44 at a threshold of 0.5). This model is used from here on. It clearly
 beats single variables: slope alone gives AP 0.19, the step height alone 0.37. The most important variables are
 the mean slope within 210 m, the elevation lost below the pixel and the height of the step below the glacier.
@@ -90,38 +91,42 @@ are detected (Fig. 2). The true skill lies between the blind (0.43) and the revi
 ![(a) Precision–recall curves of the leave-one-block-out cross-validation (14 variables), scored on the blind
 labels and on the labels revised after the review of the false alarms, compared with single variables. AP: average
 precision. (b) Out-of-fold predictions in block 4 at a threshold of 0.5, scored on the revised
-labels.](../figures/fig2_validation.pdf)
+labels.](../figures/fig2_validation.pdf){width=85%}
 
 **151 candidates over the massif.** The model finds 151 candidates (8.6 km²), 110 of them outside the mapping
-blocks and 105 inside glaciers larger than 1 km² (Fig. 3). In the random sample outside the blocks, 18 of 22
-judged candidates were hanging glaciers: precision 0.82 (Wilson 95 % interval 0.61–0.93). The three negatives
-include two of the smallest candidates (1.2–1.3 ha). The best-ranked candidates lie on the Zmuttgletscher,
+blocks and 105 inside glaciers larger than 1 km² (Fig. 3). Of the random sample of 25 candidates outside the
+blocks, 22 were judged: 18 hanging, 3 not hanging and 1 uncertain, counted as not hanging, i.e. a precision of 0.82
+(Wilson 95 % interval 0.61–0.93). Two of the three negatives are among the smallest candidates (1.2–1.3 ha). Of the
+20 best-ranked candidates, 19 were confirmed and 1 stayed uncertain (a check that is not representative). The best-ranked candidates lie on the Zmuttgletscher,
 Glacier de Zinal, Glacier de Moming, Kingletscher, Hohbalmgletscher and Bisgletscher (`report/top20_candidates.csv`).
 Leaving out one of the three index variables keeps a rank correlation of 0.81–0.83 with the full index, but only
 9 to 16 of the top 20 stay in it: the top of the ranking depends on the weighting.
 
 ![Candidate hanging glaciers of the massif (probability ≥ 0.5, ≥ 1 ha), coloured by quartile of the geometric
 index. Numbers give the ten highest ranks (two candidates share rank 7). Dashed squares: mapping
-blocks.](../figures/fig3_candidates.pdf)
+blocks.](../figures/fig3_candidates.pdf){width=85%}
 
 # 4. Discussion and limits
 
 Terrain variables that describe what lies *below* the ice detect hanging glaciers, including hanging parts of large
 inventory outlines, if the classifier is kept from using the size of the inventory unit. The review shows that a
 careful visual mapping itself misses many hanging glaciers: the classifier is useful as a screening tool, with a
-person checking its candidates. The ranking is geometric only. Whether a candidate is frozen to its bed or at the
-melting point, and how fast this may change with warming, was not assessed: it requires measurements on each
-glacier, such as the boreholes of Beer et al. (2026) on Alphubel and Chessjengletscher, and a thermal model driven
-by climate data, which is the object of the ICEFAL project.
+person checking its candidates. The ranking is geometric only: whether a candidate is frozen to its bed, and how fast this
+may change with warming, requires measurements and a thermal model driven by climate data, the object of the ICEFAL
+project. There, the method could pre-select hanging glaciers for field measurements or monitoring, and be
+transferred to the French Alps with French glacier outlines and the IGN RGE ALTI DEM, once one block is mapped
+there for training. Ice thickness is the next variable to add to the index.
 
 Limits: the main limit is the manual mapping itself. It was made by a single, non-expert mapper with little
-experience in recognising hanging glaciers, so some ice may have been labelled hanging when it is not, and some hanging glaciers or parts of glaciers may
-have been missed; the review of the false alarms shows that the second case did occur. These errors affect both the
-training labels and the scores. The reviews were also made while seeing the model's outlines, so the revised scores
-and the 0.82 precision are optimistic. Four blocks give only four folds. The geometric index is a relative ranking, not a
-hazard score calibrated on observed ice avalanches, and it ignores ice thickness, which is unknown. The Alphubel
-boreholes lie on a glacier that was hanging in 1930 but is no longer classed as hanging (Section 1), so they do not
-document the thermal state of a present-day hanging glacier.
+experience in recognising hanging glaciers, so some ice may have been labelled hanging when it is not, and some
+hanging glaciers may have been missed; the review of the false alarms shows that the second case did occur. Ten of
+the 27 blind polygons were drawn with the lowest confidence, and only 4 of them are detected. Without them, AP falls
+to 0.29, but so does the share of hanging pixels (0.029): the gain over a random guess stays about tenfold. The
+reviews were made while seeing the model's outlines, so the revised scores and the 0.82 precision are optimistic.
+Four blocks give only four folds, and the skill varies between them. Only ice inside the SGI2023 outlines and
+patches of at least 1 ha are considered: smaller hanging ice, or ice missing from the inventory, cannot be found.
+The geometric index is a relative ranking, not a hazard score calibrated on observed ice avalanches, and it ignores
+ice thickness, which is unknown. The Alphubel boreholes lie on a glacier that is no longer hanging (Section 1).
 
 # References
 
