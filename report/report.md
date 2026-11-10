@@ -6,7 +6,7 @@ date: "November 2026"
 
 **Summary.** A random forest trained on a manual mapping of four 5 × 5 km blocks finds hanging glaciers from
 terrain variables alone, including hanging parts of large glaciers that the inventory does not separate. Outside
-its training blocks, 18 of 22 randomly drawn candidates (0.82) were confirmed on orthophotos. Its 151 candidates
+its training blocks, 19 of 25 randomly drawn candidates (0.76) were confirmed on orthophotos. Its 151 candidates
 are ranked by a geometric index. Their thermal state (cold or temperate base) is not assessed here. Code, data
 versions and notebooks: <https://github.com/alexandregouzi/icefal_hanging_glaciers>.
 
@@ -95,8 +95,8 @@ labels.](../figures/fig2_validation.pdf){width=85%}
 
 **151 candidates over the massif.** The model finds 151 candidates (8.6 km²), 110 of them outside the mapping
 blocks and 105 inside glaciers larger than 1 km² (Fig. 3). Of the random sample of 25 candidates outside the
-blocks, 22 were judged: 18 hanging, 3 not hanging and 1 uncertain, counted as not hanging, i.e. a precision of 0.82
-(Wilson 95 % interval 0.61–0.93). Two of the three negatives are among the smallest candidates (1.2–1.3 ha). Of the
+blocks, 19 were hanging, 5 not hanging and 1 uncertain, counted as not hanging: precision 0.76 (Wilson 95 %
+interval 0.57–0.89). Four of the six negatives are among the smallest candidates (1.2–1.6 ha). Of the
 20 best-ranked candidates, 19 were confirmed and 1 stayed uncertain (a check that is not representative). The best-ranked candidates lie on the Zmuttgletscher,
 Glacier de Zinal, Glacier de Moming, Kingletscher, Hohbalmgletscher and Bisgletscher (`report/top20_candidates.csv`).
 Leaving out one of the three index variables keeps a rank correlation of 0.81–0.83 with the full index, but only
@@ -122,7 +122,7 @@ experience in recognising hanging glaciers, so some ice may have been labelled h
 hanging glaciers may have been missed; the review of the false alarms shows that the second case did occur. Ten of
 the 27 blind polygons were drawn with the lowest confidence, and only 4 of them are detected. Without them, AP falls
 to 0.29, but so does the share of hanging pixels (0.029): the gain over a random guess stays about tenfold. The
-reviews were made while seeing the model's outlines, so the revised scores and the 0.82 precision are optimistic.
+reviews were made while seeing the model's outlines, so the revised scores and the 0.76 precision are optimistic.
 Four blocks give only four folds, and the skill varies between them. Only ice inside the SGI2023 outlines and
 patches of at least 1 ha are considered: smaller hanging ice, or ice missing from the inventory, cannot be found.
 The geometric index is a relative ranking, not a hazard score calibrated on observed ice avalanches, and it ignores

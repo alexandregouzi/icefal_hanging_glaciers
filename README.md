@@ -12,8 +12,8 @@ those contained in larger inventory outlines, and rank them by a geometric index
   once the hanging glaciers missed by the mapping are added to the labels.
 - The area of the inventory unit is a shortcut ("small unit = hanging"): it is left out so that hanging parts of
   large glaciers are found (9 of 12 instead of 1 of 12).
-- 151 candidates over the massif (8.6 km²); in a random sample outside the mapped blocks, 18 of 22 were confirmed
-  as hanging glaciers on orthophotos (precision 0.82, 95 % interval 0.61–0.93).
+- 151 candidates over the massif (8.6 km²); in a random sample of 25 outside the mapped blocks, 19 were confirmed
+  as hanging glaciers on orthophotos (precision 0.76, 95 % interval 0.57–0.89).
 - The thermal state of the candidates (cold or temperate base) is not assessed: a 1D heat model was tried and
   dropped, as terrain data alone cannot tell it apart.
 
