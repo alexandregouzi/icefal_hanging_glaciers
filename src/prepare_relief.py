@@ -1,4 +1,4 @@
-"""Compute the layers derived from the 10 m DEM (for now: slope).
+"""Compute the slope of the 10 m DEM (shown in the QGIS mapping kit; the classifier recomputes it).
 
 Usage (from the project root):
     python src/prepare_relief.py

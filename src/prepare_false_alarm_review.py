@@ -35,7 +35,8 @@ def false_alarm_patches():
         p = src.read(1)
         transform = src.transform
     with rasterio.open(PROCESSED / f"labels_{DEM_RES}m.tif") as src:
-        glacier, hanging, _, block = src.read()
+        labels = dict(zip(src.descriptions, src.read()))
+    glacier, hanging, block = labels["glacier"], labels["hanging"], labels["block"]
     glaciers = gpd.read_file(PROCESSED / "sgi2023_zone.gpkg", layer="glaciers")
 
     alarm = (p >= THRESHOLD) & (hanging == 0) & (glacier > 0) & (block > 0)

@@ -12,11 +12,10 @@ dependencies:
   - shapely=2.2
   - pyogrio=0.12
   - rasterio=1.4
+  - pyproj=3.7         # LV95 -> WGS84 for the swissALTI3D download
   - libgdal-core=3.12  # ogrinfo / ogr2ogr, used to edit the review GeoPackages
-  - xdem=0.2
   - scikit-learn=1.9
   - matplotlib=3.11
-  - requests
   - jupyterlab=4.6
   - nbformat=5.11
   - pandoc=3.13        # report export (report/build_overleaf.sh)

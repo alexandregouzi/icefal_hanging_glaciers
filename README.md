@@ -63,6 +63,10 @@ python src/prepare_features.py   # classifier inputs and labels
 python src/make_report_figures.py
 ```
 
+The manual work in QGIS is already done and its results are versioned in `data/raw/`. The layers it used were
+built by `src/prepare_mapping_kit.py` (mapping kit), `src/prepare_false_alarm_review.py` (after notebook 03) and
+`src/prepare_candidate_review.py` (after notebook 05); each takes the output folder as argument.
+
 Study extent (LV95, EPSG:2056): E 2,608–2,642 km, N 1,090–1,113 km (`src/config.py`).
 
 ## Data sources

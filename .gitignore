@@ -20,6 +20,7 @@ Thumbs.db
 # QGIS and SQLite: automatic backups and temporary files
 *.qgz~
 *.qgs~
+icefal.qgz
 *.gpkg-wal
 *.gpkg-shm
 *.gpkg-journal
