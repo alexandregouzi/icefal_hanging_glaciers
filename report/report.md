@@ -28,10 +28,10 @@ system (EPSG:2056).](../figures/fig1_study_area.pdf)
 # 2. Methods
 
 **Manual mapping.** Four blocks of 5 × 5 km in contrasting settings (Alphubel–Täschhorn, Weisshorn–Bisgletscher,
-Fee–Allalin, Zinal–Moming; 44.4 km² of ice, 28 % of the total) were mapped exhaustively. A hanging glacier is ice
-whose front ends above a rock step or a very steep slope, so that it can only lose mass by detaching
-(Pralong & Funk 2006 [verify]). Icefalls inside a glacier were excluded: the criterion is the continuity of the ice across the step. The decision is based on the
-imagery (ice cliff, rock wall below, ice debris), never on a slope threshold, so that the slope separating the
+Fee–Allalin, Zinal–Moming; 44.4 km² of ice, 28 % of the total) were mapped exhaustively. A hanging glacier is here ice
+whose front ends above a rock step or on a very steep slope, so that it loses ice by break-off at its front (the
+avalanching glaciers of Pralong & Funk, 2006). Icefalls inside a glacier were excluded: the criterion is the
+continuity of the ice across the step. The decision is based on the imagery (ice cliff, rock wall below, ice debris), never on a slope threshold, so that the slope separating the
 classes is a result and not an assumption. Each polygon carries a confidence (1–3); the protocol is in
 `report/mapping_protocol.md`.
 
@@ -106,9 +106,11 @@ boreholes lie on an SGI unit that was neither mapped nor predicted as hanging.
 
 # References
 
-All references marked [verify] must be checked against the original before submission.
-
-- Beer, J., Jacquemart, M., Huss, M., et al. (2026). *The Cryosphere* 20, 5453–5473. <https://doi.org/10.5194/tc-20-5453-2026>.
-- GLAMOS (2026). Swiss Glacier Inventory 2023 (SGI2023), release 2026. <https://doi.org/10.18750/inventory.2023.r2026>.
-- Pralong, A. & Funk, M. (2006). On the instability of avalanching glaciers. *J. Glaciol.* [verify]
+- Beer, J., Jacquemart, M., Huss, M., Santin, I., Clara Racz, G., Ogier, C., Gindraux, S., Hösli, L., Moser, R.,
+  Irving, J., Fischer, M. & Farinotti, D. (2026). Polythermal conditions in small glaciers in the Swiss Alps.
+  *The Cryosphere* 20, 5453–5473. <https://doi.org/10.5194/tc-20-5453-2026>.
+- GLAMOS (2026). Swiss Glacier Inventory 2023 (SGI2023), release 2026. Glacier Monitoring Switzerland.
+  <https://doi.org/10.18750/inventory.sgi2023.r2026>.
+- Pralong, A. & Funk, M. (2006). On the instability of avalanching glaciers. *Journal of Glaciology* 52(176),
+  31–48. <https://doi.org/10.3189/172756506781828980>.
 - swisstopo. swissALTI3D (2024) and SWISSIMAGE 10 cm (2023).

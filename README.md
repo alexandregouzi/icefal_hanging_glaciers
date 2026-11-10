@@ -46,7 +46,7 @@ conda activate icefal
 
 Data to fetch (not in the repository):
 
-- **SGI2023** (GLAMOS, release 2026, doi:10.18750/inventory.2023.r2026): shapefiles in `data/raw/sgi2023/`.
+- **SGI2023** (GLAMOS, release 2026, doi:10.18750/inventory.sgi2023.r2026): shapefiles in `data/raw/sgi2023/`.
 - **swissALTI3D** (swisstopo, 2 m): `python src/download_swissalti3d.py` (about 760 tiles, ~0.8 GB).
 - **glenglat** (borehole locations, shown on the maps): clone https://github.com/mjacqu/glenglat into
   `data/raw/glenglat`.
@@ -71,6 +71,6 @@ Study extent (LV95, EPSG:2056): E 2,608–2,642 km, N 1,090–1,113 km (`src/con
 
 ## Data sources
 
-- GLAMOS (2026). Swiss Glacier Inventory 2023 (SGI2023). doi:10.18750/inventory.2023.r2026
+- GLAMOS (2026). Swiss Glacier Inventory 2023 (SGI2023). doi:10.18750/inventory.sgi2023.r2026
 - swisstopo: swissALTI3D (2024) and SWISSIMAGE (2023), open data.
 - Beer, J., Jacquemart, M., Huss, M., et al. (2026). *The Cryosphere* 20, 5453–5473. doi:10.5194/tc-20-5453-2026

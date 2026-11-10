@@ -1,7 +1,6 @@
 # Manual mapping protocol – hanging glaciers
 
-Draft for the Methods section. To be checked and adjusted by the author before use.
-References marked **[verify]** must be checked against the original papers.
+Protocol of the manual mapping used as training and evaluation labels.
 
 ## Purpose
 
@@ -14,11 +13,14 @@ spatial cross-validation.
 ## Definition
 
 A **hanging glacier** is a glacier, or part of a glacier, whose front ends above a rock step
-or a very steep slope, so that ice can only leave it by detaching (serac falls or ice avalanches).
-Two front types are recorded, following Alean (1985) **[verify]**:
+or on a very steep slope, so that it loses ice by break-off at its front (serac falls or ice avalanches):
+the avalanching glaciers of Pralong & Funk (2006). Two front types are recorded, after the two types of
+ice-avalanche starting zones of Alean (1985):
 
-- **cliff**: the front ends abruptly at the edge of a rock step, with a visible ice cliff or serac band;
-- **ramp**: the ice rests on a steep bed and ends without an ice cliff; failure would involve a slab of the glacier.
+- **cliff** (Alean's type II): the ice breaks off where the bed steepens abruptly, at the edge of a rock step,
+  with a visible ice cliff or serac band;
+- **ramp** (Alean's type I, a steep bed of fairly constant slope; the word *ramp* is from Pralong & Funk 2006):
+  the ice ends without an ice cliff; failure would involve a slab of the glacier.
 
 Excluded:
 
@@ -101,3 +103,12 @@ are never used as labels.
 Because only places predicted *hanging* were reviewed, the corrections all favour the model. The evaluation
 therefore uses the initial labels as the reference; scores with the revised labels (all polygons, reviewed patches
 judged hanging or unsure but not redrawn excluded) are reported as an upper bound (notebook 04).
+
+## References
+
+- Alean, J. (1985). Ice avalanches: some empirical information about their formation and reach.
+  *Journal of Glaciology* 31(109), 324–333. <https://doi.org/10.3189/S0022143000006663>.
+- GLAMOS (2026). Swiss Glacier Inventory 2023 (SGI2023), release 2026. Glacier Monitoring Switzerland.
+  <https://doi.org/10.18750/inventory.sgi2023.r2026>.
+- Pralong, A. & Funk, M. (2006). On the instability of avalanching glaciers. *Journal of Glaciology* 52(176),
+  31–48. <https://doi.org/10.3189/172756506781828980>.
