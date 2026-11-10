@@ -39,13 +39,16 @@ system (EPSG:2056).](../figures/fig1_study_area.pdf)
 # 2. Methods
 
 **Manual mapping.** Four blocks of 5 × 5 km in contrasting settings (Alphubel–Täschhorn, Weisshorn–Bisgletscher,
-Fee–Allalin, Zinal–Moming; 44.4 km² of ice, 28 % of the total) were mapped exhaustively. A hanging glacier is here ice
-whose front ends above a rock step or on a very steep slope, so that it loses ice by break-off at its front (the
-avalanching glaciers of Pralong & Funk, 2006). Icefalls inside a glacier were excluded: the criterion is the
-continuity of the ice across the step. The decision is based on the imagery (ice cliff, rock wall below, ice debris), never on a slope threshold, so that the slope separating the
-classes is a result and not an assumption. Where the orthophotos were unclear, recent photographs and videos of
-the glaciers found online were used as a complement. Each polygon carries a confidence (1–3); the protocol is in
-`report/mapping_protocol.md`.
+Fee–Allalin, Zinal–Moming; 44.4 km² of ice, 28 % of the total) were mapped exhaustively. The polygons were drawn by
+hand in QGIS (version 3.42) on the SWISSIMAGE 10 cm orthophotos, streamed from swisstopo (WMTS), with the hillshade
+and slope map of the DEM and the SGI2023 outlines and centre lines as reference layers; the later reviews of the
+model's outputs were made in the same way. A hanging glacier is here ice whose front ends above a rock step or on a
+very steep slope, so that it loses ice by break-off at its front (the avalanching glaciers of Pralong & Funk, 2006).
+Icefalls inside a glacier were excluded: the criterion is the continuity of the ice across the step. The decision is
+based on the imagery (ice cliff, rock wall below, ice debris), never on a slope threshold, so that the slope
+separating the classes is a result and not an assumption. Where the orthophotos were unclear, recent photographs and
+videos of the glaciers found online were used as a complement. Each polygon carries a confidence (1–3); the protocol
+is in `report/mapping_protocol.md`.
 
 **Variables.** Fifteen variables per 10 m glacier pixel come from the DEM and the SGI outlines only: elevation,
 slope, aspect, curvature, slope and relief within 210 m, distance to the glacier edge, relative elevation in the

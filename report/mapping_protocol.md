@@ -86,7 +86,7 @@ the same year as the SGI2023 outlines in these blocks.
 
 ## Data and tools
 
-- Imagery: SWISSIMAGE 10 cm, WMTS stream `ch.swisstopo.swissimage` (swisstopo), viewed in QGIS.
+- Imagery: SWISSIMAGE 10 cm, WMTS stream `ch.swisstopo.swissimage` (swisstopo), viewed in QGIS 3.42.
 - Where the orthophotos were unclear: recent photographs and videos of the glaciers found online.
 - Terrain: 10 m DEM from swissALTI3D 2024 (hillshade) and the derived slope map.
 - Reference: SGI2023 outlines and centre lines (GLAMOS 2026).
