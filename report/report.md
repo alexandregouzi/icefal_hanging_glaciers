@@ -20,6 +20,14 @@ N 1,090–1,113 km). It holds 127 whole glaciers of the Swiss Glacier Inventory 
 158.6 km²). Terrain comes from swissALTI3D (2 m, 2024), averaged exactly to 10 m. Hanging glaciers were mapped on
 SWISSIMAGE 2023 orthophotos, the same year as the SGI2023 outlines of the area (Fig. 1).
 
+The area was chosen for two reasons. It is high mountain terrain, with several summits above 4,000 m (Dom,
+Weisshorn, Täschhorn): 91 % of its glacier area belongs to glaciers whose median elevation is above 3,000 m, a range in
+which Beer et al. (2026) found polythermal ice in small glaciers. It also holds two of the six small glaciers where Beer et al. (2026)
+measured ice temperatures in boreholes, Alphubel South and Chessjengletscher (a third, Hohsaasgletscher, lies
+1.5 km east of the area). Beer et al. (2026) note that historical imagery from 1930 shows Alphubel as a much thicker
+hanging glacier with a prominent frontal break-off; on the 2023 orthophotos it no longer appears to be hanging, and
+it was neither mapped nor predicted as hanging in this study.
+
 ![(a) Study area, SGI2023 glacier outlines, the four mapping blocks and the boreholes of Beer et al. (2026) on
 Alphubel and Chessjengletscher. (b) Manual mapping in block 4 (Zinal–Moming): hanging glaciers of the blind mapping
 and those added after the review of the false alarms. Hillshade from swissALTI3D; coordinates in the Swiss LV95
@@ -106,7 +114,8 @@ have been missed; the review of the false alarms shows that the second case did 
 training labels and the scores. The reviews were also made while seeing the model's outlines, so the revised scores
 and the 0.82 precision are optimistic. Four blocks give only four folds. The geometric index is a relative ranking, not a
 hazard score calibrated on observed ice avalanches, and it ignores ice thickness, which is unknown. The Alphubel
-boreholes lie on an SGI unit that was neither mapped nor predicted as hanging.
+boreholes lie on a glacier that was hanging in 1930 but is no longer classed as hanging (Section 1), so they do not
+document the thermal state of a present-day hanging glacier.
 
 # References
 
