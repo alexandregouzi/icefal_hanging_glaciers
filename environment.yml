@@ -1,0 +1,22 @@
+# Conda environment of the project: conda env create -f environment.yml
+# Versions are those used for the results in the report.
+name: icefal
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy=2.4
+  - scipy=1.17
+  - pandas=2.3
+  - geopandas=1.2
+  - shapely=2.2
+  - pyogrio=0.12
+  - rasterio=1.4
+  - libgdal-core=3.12  # ogrinfo / ogr2ogr, used to edit the review GeoPackages
+  - xdem=0.2
+  - scikit-learn=1.9
+  - matplotlib=3.11
+  - requests
+  - jupyterlab=4.6
+  - nbformat=5.11
+  - pandoc=3.13        # report export (report/build_overleaf.sh)
