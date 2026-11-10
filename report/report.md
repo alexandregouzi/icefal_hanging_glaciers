@@ -32,7 +32,8 @@ Fee–Allalin, Zinal–Moming; 44.4 km² of ice, 28 % of the total) were mapped 
 whose front ends above a rock step or on a very steep slope, so that it loses ice by break-off at its front (the
 avalanching glaciers of Pralong & Funk, 2006). Icefalls inside a glacier were excluded: the criterion is the
 continuity of the ice across the step. The decision is based on the imagery (ice cliff, rock wall below, ice debris), never on a slope threshold, so that the slope separating the
-classes is a result and not an assumption. Each polygon carries a confidence (1–3); the protocol is in
+classes is a result and not an assumption. Where the orthophotos were unclear, recent photographs and videos of
+the glaciers found online were used as a complement. Each polygon carries a confidence (1–3); the protocol is in
 `report/mapping_protocol.md`.
 
 **Variables.** Fifteen variables per 10 m glacier pixel come from the DEM and the SGI outlines only: elevation,
@@ -99,8 +100,11 @@ melting point, and how fast this may change with warming, was not assessed: it r
 glacier, such as the boreholes of Beer et al. (2026) on Alphubel and Chessjengletscher, and a thermal model driven
 by climate data, which is the object of the ICEFAL project.
 
-Limits: one mapper, and the reviews were made while seeing the model's outlines, so the revised scores and the
-0.82 precision are optimistic. Four blocks give only four folds. The geometric index is a relative ranking, not a
+Limits: the main limit is the manual mapping itself. It was made by a single, non-expert mapper with little
+experience in recognising hanging glaciers, so some ice may have been labelled hanging when it is not, and some hanging glaciers or parts of glaciers may
+have been missed; the review of the false alarms shows that the second case did occur. These errors affect both the
+training labels and the scores. The reviews were also made while seeing the model's outlines, so the revised scores
+and the 0.82 precision are optimistic. Four blocks give only four folds. The geometric index is a relative ranking, not a
 hazard score calibrated on observed ice avalanches, and it ignores ice thickness, which is unknown. The Alphubel
 boreholes lie on an SGI unit that was neither mapped nor predicted as hanging.
 
