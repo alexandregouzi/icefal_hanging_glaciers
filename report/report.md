@@ -8,7 +8,7 @@ date: "November 2026"
 terrain variables alone, including hanging parts of large glaciers that the inventory does not separate. Outside
 its training blocks, 18 of 22 randomly drawn candidates (0.82) were confirmed on orthophotos. Its 151 candidates
 are ranked by a geometric index. Their thermal state (cold or temperate base) is not assessed here. Code, data
-versions and notebooks: `github.com/<user>/icefal` [to fill in].
+versions and notebooks: <https://github.com/alexandregouzi/icefal_hanging_glaciers>.
 
 # 1. Question and study area
 
