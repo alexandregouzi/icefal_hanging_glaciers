@@ -1,4 +1,4 @@
-# Hanging glaciers of the Mischabel–Weisshorn massif (Valais)
+# Hanging glaciers of the Mischabel–Weisshorn–Dent Blanche massifs (Valais)
 
 A short study, made in November 2026 for a PhD application (ICEFAL project, VAW–ETH Zurich / WSL).
 
@@ -7,12 +7,12 @@ those contained in larger inventory outlines, and rank them by a geometric index
 
 **Main results** (details in [`report/report.md`](report/report.md)):
 
-- A random forest using only terrain variables (swissALTI3D, SGI2023 outlines) reaches an average precision of
+- A random forest using only terrain variables and inventory outlines (swissALTI3D, SGI2023) reaches an average precision of
   0.43 in leave-one-block-out cross-validation on the blind manual mapping (random classifier: 0.044), and 0.75
   once the hanging glaciers missed by the mapping are added to the labels.
 - The area of the inventory unit is a shortcut ("small unit = hanging"): it is left out so that hanging parts of
   large glaciers are found (9 of 12 instead of 1 of 12).
-- 151 candidates over the massif (8.6 km²); in a random sample of 25 outside the mapped blocks, 19 were confirmed
+- 151 candidates over the study area (8.6 km²); in a random sample of 25 outside the mapped blocks, 19 were confirmed
   as hanging glaciers on orthophotos (precision 0.76, 95 % interval 0.57–0.89).
 - The thermal state of the candidates (cold or temperate base) is not assessed: a 1D heat model was tried and
   dropped, as terrain data alone cannot tell it apart.
