@@ -21,12 +21,15 @@ N 1,090–1,113 km). It holds 127 whole glaciers of the Swiss Glacier Inventory 
 SWISSIMAGE 2023 orthophotos, the same year as the SGI2023 outlines of the area (Fig. 1).
 
 The area was chosen for two reasons. It is high mountain terrain, with several summits above 4,000 m (Dom,
-Weisshorn, Täschhorn): 91 % of its glacier area belongs to glaciers whose median elevation is above 3,000 m, a range in
-which Beer et al. (2026) found polythermal ice in small glaciers. It also holds two of the six small glaciers where Beer et al. (2026)
-measured ice temperatures in boreholes, Alphubel South and Chessjengletscher (a third, Hohsaasgletscher, lies
-1.5 km east of the area). Beer et al. (2026) note that historical imagery from 1930 shows Alphubel as a much thicker
-hanging glacier with a prominent frontal break-off; on the 2023 orthophotos it no longer appears to be hanging, and
-it was neither mapped nor predicted as hanging in this study.
+Weisshorn, Täschhorn): 91 % of its glacier area belongs to glaciers whose median elevation is above 3,000 m. At these
+elevations hanging glaciers can be frozen to their bed, and their stability depends on this basal state: where the
+ice–bed interface becomes partly temperate, meltwater may reduce the basal resistance, with no clear precursory
+signs, so that the thermal regime has to be monitored (Faillettaz et al., 2015). This is the focus of the ICEFAL
+project. The area also holds two of the six small glaciers where Beer et al. (2026) measured ice temperatures in
+boreholes, Alphubel South and Chessjengletscher (a third, Hohsaasgletscher, lies 1.5 km east of the area). They
+found polythermal ice in these glaciers, with a bed still frozen at Alphubel. Historical imagery from 1930 shows
+Alphubel as a much thicker hanging glacier with a prominent frontal break-off (Beer et al., 2026); on the 2023
+orthophotos it no longer appears to be hanging, and it was neither mapped nor predicted as hanging in this study.
 
 ![(a) Study area, SGI2023 glacier outlines, the four mapping blocks and the boreholes of Beer et al. (2026) on
 Alphubel and Chessjengletscher. (b) Manual mapping in block 4 (Zinal–Moming): hanging glaciers of the blind mapping
@@ -122,6 +125,8 @@ document the thermal state of a present-day hanging glacier.
 - Beer, J., Jacquemart, M., Huss, M., Santin, I., Clara Racz, G., Ogier, C., Gindraux, S., Hösli, L., Moser, R.,
   Irving, J., Fischer, M. & Farinotti, D. (2026). Polythermal conditions in small glaciers in the Swiss Alps.
   *The Cryosphere* 20, 5453–5473. <https://doi.org/10.5194/tc-20-5453-2026>.
+- Faillettaz, J., Funk, M. & Vincent, C. (2015). Avalanching glacier instabilities: review on processes and early
+  warning perspectives. *Reviews of Geophysics* 53(2), 203–224. <https://doi.org/10.1002/2014RG000466>.
 - GLAMOS (2026). Swiss Glacier Inventory 2023 (SGI2023), release 2026. Glacier Monitoring Switzerland.
   <https://doi.org/10.18750/inventory.sgi2023.r2026>.
 - Pralong, A. & Funk, M. (2006). On the instability of avalanching glaciers. *Journal of Glaciology* 52(176),
